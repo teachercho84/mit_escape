@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARIA 연구소 탈출 — 기록 관리</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <header class="top-bar">
+    <div class="brand">
+      <span class="brand-mark">◉</span>
+      <h1>ARIA SYSTEM <span class="brand-sub">// 기록 관리 콘솔</span></h1>
+    </div>
+    <a class="back-link" href="index.html">← 리더보드로 돌아가기</a>
+  </header>
+
+  <main class="admin-main">
+    <section class="admin-section">
+      <h2 class="panel-title">▸ 전체 기록 (수정 후 [저장] 클릭)</h2>
+      <div class="admin-toolbar">
+        <button id="btn-export" class="btn btn-gold btn-small">CSV 내보내기</button>
+        <button id="btn-reset" class="btn btn-danger btn-small">전체 초기화</button>
+      </div>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th style="width:24%">팀명</th>
+            <th style="width:14%">소요시간 (분:초)</th>
+            <th style="width:12%">힌트 (0~6)</th>
+            <th style="width:14%">완주 여부</th>
+            <th style="width:14%">최종기록</th>
+            <th style="width:22%">작업</th>
+          </tr>
+        </thead>
+        <tbody id="admin-body"></tbody>
+      </table>
+      <p class="empty-msg" id="admin-empty" hidden>저장된 기록이 없습니다.</p>
+    </section>
+
+    <section class="admin-section">
+      <h2 class="panel-title">▸ 수동 기록 추가 (타이머를 사용하지 못한 경우)</h2>
+      <form id="add-form" class="add-form" autocomplete="off">
+        <label>팀명
+          <input type="text" id="add-name" maxlength="20" required>
+        </label>
+        <label>소요시간 (분:초)
+          <input type="text" id="add-time" class="in-time" placeholder="12:34" required>
+        </label>
+        <label>힌트 횟수
+          <input type="number" id="add-hints" min="0" max="6" value="0" required>
+        </label>
+        <label>완주 여부
+          <select id="add-finished">
+            <option value="1">완주</option>
+            <option value="0">미완주</option>
+          </select>
+        </label>
+        <button type="submit" class="btn btn-success">추가</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="foot">영산고등학교 MIT 동아리 · 함박데이 — ARIA 연구소 탈출</footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

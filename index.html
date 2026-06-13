@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARIA 연구소 탈출 — 리더보드</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <header class="top-bar">
+    <div class="brand">
+      <span class="brand-mark">◉</span>
+      <h1>ARIA SYSTEM <span class="brand-sub">// 연구소 탈출 프로토콜</span></h1>
+    </div>
+    <form id="entry-form" class="entry-form" autocomplete="off">
+      <input type="text" id="entry-name" maxlength="20" placeholder="팀명 입력 후 Enter — 즉시 출발!" required>
+      <button type="submit">입장</button>
+    </form>
+    <a class="admin-link" href="admin.html" title="기록 관리">⚙</a>
+  </header>
+
+  <main class="layout" id="layout">
+    <!-- 진행 중인 팀 패널 (팀이 있을 때만 표시) -->
+    <section class="active-panel" id="active-panel" hidden>
+      <h2 class="panel-title">▸ 진행 중인 팀</h2>
+      <div id="session-cards" class="session-cards"></div>
+    </section>
+
+    <!-- 리더보드 -->
+    <section class="board-panel">
+      <h2 class="panel-title">▸ 탈출 기록 리더보드</h2>
+      <p class="panel-note">최종 기록 = 소요시간 + 힌트 1회당 +30초</p>
+      <table class="board" id="board-finished">
+        <thead>
+          <tr>
+            <th class="col-rank">순위</th>
+            <th>팀명</th>
+            <th class="col-num">소요시간</th>
+            <th class="col-num">힌트</th>
+            <th class="col-num">최종기록</th>
+          </tr>
+        </thead>
+        <tbody id="board-finished-body"></tbody>
+      </table>
+      <p class="empty-msg" id="empty-finished" hidden>아직 탈출에 성공한 팀이 없습니다.</p>
+
+      <div id="dnf-section" hidden>
+        <h3 class="dnf-title">— 미완주 —</h3>
+        <table class="board board-dnf">
+          <tbody id="board-dnf-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">영산고등학교 MIT 동아리 · 함박데이 — ARIA 연구소 탈출</footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

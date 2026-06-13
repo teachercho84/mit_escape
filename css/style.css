@@ -1,0 +1,320 @@
+/* ARIA 연구소 탈출 — SF 연구소 모니터 테마
+   네이비 #1F3864 기반 + 금색 포인트, 숫자는 모노스페이스
+   오프라인 동작을 위해 웹폰트(CDN) 미사용 — 시스템 폰트 스택 */
+
+:root {
+  --navy-deep: #0b1830;
+  --navy: #1f3864;
+  --navy-light: #2a4a80;
+  --panel: rgba(31, 56, 100, 0.55);
+  --line: rgba(120, 170, 255, 0.25);
+  --text: #eaf1ff;
+  --text-dim: #9db4d8;
+  --gold: #f0c75e;
+  --silver: #c9d6e8;
+  --bronze: #d9a06b;
+  --cyan: #5ad0e6;
+  --green: #4cd98a;
+  --red: #ff5f6b;
+  --mono: "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+  --sans: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  font-family: var(--sans);
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 50% -20%, var(--navy-light) 0%, transparent 55%),
+    linear-gradient(180deg, var(--navy-deep) 0%, #0d1d3d 100%);
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+}
+
+/* SF 모니터 스캔라인 효과 */
+.scanlines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.12) 0px,
+    rgba(0, 0, 0, 0.12) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  opacity: 0.5;
+}
+
+/* ---------- 상단 바 ---------- */
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(11, 24, 48, 0.8);
+}
+
+.brand { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 260px; }
+.brand-mark { color: var(--cyan); font-size: 1.2rem; animation: pulse 2s infinite; }
+@keyframes pulse { 50% { opacity: 0.35; } }
+
+.brand h1 {
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  font-family: var(--mono);
+  color: var(--text);
+  text-shadow: 0 0 12px rgba(90, 208, 230, 0.45);
+}
+.brand-sub { font-size: 0.8rem; color: var(--text-dim); letter-spacing: 0.05em; }
+
+.entry-form { display: flex; gap: 8px; }
+.entry-form input {
+  width: min(320px, 60vw);
+  padding: 10px 14px;
+  font-size: 1rem;
+  font-family: var(--sans);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  outline: none;
+}
+.entry-form input:focus { border-color: var(--cyan); box-shadow: 0 0 10px rgba(90, 208, 230, 0.35); }
+.entry-form input::placeholder { color: var(--text-dim); }
+.entry-form button {
+  padding: 10px 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy-deep);
+  background: var(--cyan);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.entry-form button:hover { filter: brightness(1.1); }
+
+.admin-link {
+  color: var(--text-dim);
+  font-size: 1.3rem;
+  text-decoration: none;
+  padding: 4px 8px;
+}
+.admin-link:hover { color: var(--gold); }
+
+/* ---------- 레이아웃 ---------- */
+
+.layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 20px 22px;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+.layout.with-active { grid-template-columns: minmax(340px, 5fr) 7fr; }
+
+.panel-title {
+  font-size: 0.95rem;
+  font-family: var(--mono);
+  letter-spacing: 0.15em;
+  color: var(--cyan);
+  margin-bottom: 10px;
+}
+.panel-note { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 12px; }
+
+/* ---------- 진행 중인 팀 카드 ---------- */
+
+.session-cards { display: flex; flex-direction: column; gap: 14px; }
+
+.session-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--cyan);
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+.session-card.overtime {
+  border-left-color: var(--red);
+  animation: blink-border 1s infinite;
+}
+@keyframes blink-border {
+  50% { box-shadow: 0 0 18px rgba(255, 95, 107, 0.55); }
+}
+
+.session-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; }
+
+.session-timer {
+  font-family: var(--mono);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  text-shadow: 0 0 16px rgba(90, 208, 230, 0.4);
+  line-height: 1.1;
+}
+.session-card.overtime .session-timer { color: var(--red); text-shadow: 0 0 16px rgba(255, 95, 107, 0.5); }
+
+.session-hints { font-size: 0.95rem; color: var(--text-dim); margin: 6px 0 12px; }
+.session-hints b { color: var(--gold); font-family: var(--mono); }
+.penalty { color: var(--red); }
+
+.session-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.btn {
+  padding: 9px 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: var(--sans);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text);
+}
+.btn:hover { filter: brightness(1.25); }
+.btn-hint { border-color: var(--gold); color: var(--gold); }
+.btn-success { background: var(--green); border-color: var(--green); color: var(--navy-deep); }
+.btn-fail { border-color: var(--red); color: var(--red); }
+
+/* ---------- 리더보드 ---------- */
+
+.board-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+.board { width: 100%; border-collapse: collapse; }
+.board th {
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+}
+.board td {
+  padding: 10px;
+  font-size: 1.05rem;
+  border-bottom: 1px solid rgba(120, 170, 255, 0.1);
+}
+.col-rank { width: 64px; }
+.col-num { text-align: right; font-family: var(--mono); width: 15%; white-space: nowrap; }
+/* .board th의 text-align: left보다 우선순위를 높여 헤더도 숫자와 같이 오른쪽 정렬 */
+.board th.col-num { text-align: right; font-family: var(--sans); }
+.final { font-weight: 700; color: var(--cyan); }
+
+.rank-badge {
+  display: inline-block;
+  min-width: 34px;
+  text-align: center;
+  font-family: var(--mono);
+  font-weight: 700;
+  padding: 3px 0;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* 1~3위 금/은/동 강조 */
+.rank-gold td { background: rgba(240, 199, 94, 0.12); font-size: 1.15rem; }
+.rank-gold .rank-badge { background: var(--gold); color: var(--navy-deep); }
+.rank-gold .final { color: var(--gold); }
+.rank-silver td { background: rgba(201, 214, 232, 0.09); }
+.rank-silver .rank-badge { background: var(--silver); color: var(--navy-deep); }
+.rank-bronze td { background: rgba(217, 160, 107, 0.09); }
+.rank-bronze .rank-badge { background: var(--bronze); color: var(--navy-deep); }
+
+.empty-msg { padding: 26px 0; text-align: center; color: var(--text-dim); }
+
+.dnf-title {
+  margin: 18px 0 6px;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  text-align: center;
+}
+.board-dnf td { color: var(--text-dim); }
+
+/* ---------- 푸터 ---------- */
+
+.foot {
+  padding: 10px 22px 16px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+}
+
+/* ---------- 관리 화면 ---------- */
+
+.admin-main { max-width: 1100px; margin: 0 auto; padding: 20px 22px; width: 100%; }
+
+.admin-section {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+}
+
+.admin-table { width: 100%; border-collapse: collapse; }
+.admin-table th {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.admin-table td { padding: 8px; border-bottom: 1px solid rgba(120, 170, 255, 0.1); }
+
+.admin-table input, .admin-table select,
+.add-form input, .add-form select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  font-family: var(--sans);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  outline: none;
+}
+.admin-table input:focus, .add-form input:focus { border-color: var(--cyan); }
+.admin-table select option, .add-form select option { background: var(--navy); color: var(--text); }
+.admin-table .in-time, .add-form .in-time { font-family: var(--mono); }
+
+.add-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; }
+.add-form label { display: flex; flex-direction: column; gap: 5px; font-size: 0.8rem; color: var(--text-dim); }
+
+.btn-small { padding: 7px 12px; font-size: 0.85rem; }
+.btn-danger { background: var(--red); border-color: var(--red); color: #fff; }
+.btn-gold { background: var(--gold); border-color: var(--gold); color: var(--navy-deep); }
+
+.admin-toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.back-link { color: var(--cyan); text-decoration: none; font-size: 0.9rem; }
+.back-link:hover { text-decoration: underline; }
+
+/* ---------- 모바일/태블릿 ---------- */
+
+@media (max-width: 900px) {
+  .layout.with-active { grid-template-columns: 1fr; }
+  .top-bar { padding: 12px 14px; }
+  .layout, .admin-main { padding: 14px; }
+  .board td { font-size: 0.95rem; padding: 8px 6px; }
+  .session-timer { font-size: 2.6rem; }
+}
