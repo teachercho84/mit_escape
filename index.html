@@ -21,7 +21,53 @@
     <a class="admin-link" href="admin.html" title="기록 관리">⚙</a>
   </header>
 
+  <div class="stats-bar">
+    <div class="stat-chip">
+      <span class="stat-label">총 참가</span>
+      <div class="stat-row"><span class="stat-value" id="stat-total">0</span><span class="stat-unit">팀</span></div>
+    </div>
+    <div class="stat-chip">
+      <span class="stat-label">탈출 성공</span>
+      <div class="stat-row"><span class="stat-value" id="stat-success">0</span><span class="stat-unit">팀</span></div>
+    </div>
+    <div class="stat-chip">
+      <span class="stat-label">성공률</span>
+      <div class="stat-row"><span class="stat-value" id="stat-rate">—</span><span class="stat-unit" id="stat-rate-pct"></span></div>
+    </div>
+    <div class="stat-chip">
+      <span class="stat-label">현재 1위</span>
+      <div class="stat-row"><span class="stat-value stat-value-best" id="stat-best">--:--</span></div>
+    </div>
+  </div>
+
   <main class="layout" id="layout">
+    <!-- 미션 브리핑 (이벤트 시작 전 빈 상태) -->
+    <section id="mission-brief" class="mission-brief" hidden>
+      <div class="brief-inner">
+        <p class="brief-tag">// MISSION BRIEFING</p>
+        <h2 class="brief-title">ARIA 연구소 탈출 프로토콜</h2>
+        <p class="brief-desc">봉인된 ARIA 연구소에 침투하여 격리된 시스템을 복구하라.<br>아두이노 코딩, 회로 수복, RC카 프로그래밍으로 탈출 루트를 개척한다.</p>
+        <div class="brief-rules">
+          <div class="brief-rule">
+            <span class="brief-rule-icon">⏱</span>
+            <span>탈출 제한 시간</span>
+            <span class="brief-rule-val">15 : 00</span>
+          </div>
+          <div class="brief-rule">
+            <span class="brief-rule-icon">💡</span>
+            <span>힌트 사용</span>
+            <span class="brief-rule-val">최대 6회 · 회당 +30초 패널티</span>
+          </div>
+          <div class="brief-rule">
+            <span class="brief-rule-icon">🏆</span>
+            <span>최종 기록</span>
+            <span class="brief-rule-val">소요시간 + 힌트 패널티 합산</span>
+          </div>
+        </div>
+        <p class="brief-cta">▲ 위 팀명 입력란에 팀명을 입력하고 Enter를 누르면 타이머가 즉시 시작됩니다</p>
+      </div>
+    </section>
+
     <!-- 진행 중인 팀 패널 (팀이 있을 때만 표시) -->
     <section class="active-panel" id="active-panel" hidden>
       <h2 class="panel-title">▸ 진행 중인 팀</h2>

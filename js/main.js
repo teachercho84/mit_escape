@@ -27,6 +27,7 @@
     ARIA.startSession(name);
     entryName.value = "";
     renderSessions();
+    renderStats();
   });
 
   // ---------- 진행 중 타이머 카드 ----------
@@ -34,7 +35,6 @@
   function renderSessions() {
     const sessions = ARIA.getSessions();
     activePanel.hidden = sessions.length === 0;
-    layout.classList.toggle("with-active", sessions.length > 0);
 
     cardsEl.innerHTML = sessions
       .map((s) => {
@@ -78,12 +78,14 @@
         ARIA.endSession(id, true);
         renderSessions();
         renderBoard();
+        renderStats();
       }
     } else if (action === "dnf") {
       if (confirm(`[${session.name}] 팀을 미완주 처리할까요?\n리더보드 하단에 별도 표시됩니다.`)) {
         ARIA.endSession(id, false);
         renderSessions();
         renderBoard();
+        renderStats();
       }
     }
   });
@@ -99,6 +101,33 @@
       card.querySelector("[data-timer]").textContent = ARIA.fmt(elapsed);
       card.classList.toggle("overtime", elapsed > ARIA.TIME_LIMIT_SEC);
     });
+  }
+
+  // ---------- 통계 바 + 미션 브리핑 ----------
+
+  function renderStats() {
+    const { finished, dnf } = ARIA.getRanked();
+    const sessions = ARIA.getSessions();
+    const total = finished.length + dnf.length + sessions.length;
+    const concluded = finished.length + dnf.length;
+
+    document.getElementById("stat-total").textContent = total;
+    document.getElementById("stat-success").textContent = finished.length;
+
+    if (concluded > 0) {
+      document.getElementById("stat-rate").textContent = Math.round(finished.length / concluded * 100);
+      document.getElementById("stat-rate-pct").textContent = "%";
+    } else {
+      document.getElementById("stat-rate").textContent = "—";
+      document.getElementById("stat-rate-pct").textContent = "";
+    }
+
+    document.getElementById("stat-best").textContent =
+      finished.length > 0 ? ARIA.fmt(finished[0].finalSec) : "--:--";
+
+    const hasAnyData = sessions.length > 0 || finished.length > 0 || dnf.length > 0;
+    layout.classList.toggle("with-active", hasAnyData);
+    document.getElementById("mission-brief").hidden = sessions.length > 0;
   }
 
   // ---------- 리더보드 ----------
@@ -143,9 +172,11 @@
   window.addEventListener("storage", () => {
     renderSessions();
     renderBoard();
+    renderStats();
   });
 
   setInterval(tick, 250);
   renderSessions();
   renderBoard();
+  renderStats();
 })();

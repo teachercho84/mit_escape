@@ -109,6 +109,136 @@ body {
 }
 .admin-link:hover { color: var(--gold); }
 
+/* ---------- 통계 바 ---------- */
+
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  background: rgba(11, 24, 48, 0.6);
+  border-bottom: 1px solid var(--line);
+}
+
+.stat-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 32px;
+  gap: 2px;
+  border-right: 1px solid var(--line);
+}
+.stat-chip:last-child { border-right: none; }
+
+.stat-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.stat-row { display: flex; align-items: baseline; gap: 4px; }
+
+.stat-value {
+  font-family: var(--mono);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--cyan);
+  line-height: 1;
+}
+
+.stat-unit {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-family: var(--mono);
+}
+
+.stat-value-best {
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 10px rgba(90, 208, 230, 0.45);
+}
+
+/* ---------- 미션 브리핑 ---------- */
+
+.mission-brief {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10px;
+}
+
+.brief-inner {
+  width: 100%;
+  max-width: 660px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--cyan);
+  border-radius: 10px;
+  padding: 32px 36px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35), 0 0 40px rgba(90, 208, 230, 0.05);
+}
+
+.brief-tag {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--cyan);
+  margin-bottom: 8px;
+}
+
+.brief-title {
+  font-size: 1.55rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  margin-bottom: 14px;
+  text-shadow: 0 0 14px rgba(90, 208, 230, 0.25);
+}
+
+.brief-desc {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+.brief-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 26px;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.brief-rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+}
+
+.brief-rule-icon { width: 22px; text-align: center; }
+.brief-rule span:nth-child(2) { flex: 1; color: var(--text-dim); }
+
+.brief-rule-val {
+  font-family: var(--mono);
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+}
+
+.brief-cta {
+  font-size: 0.82rem;
+  color: var(--cyan);
+  text-align: center;
+  letter-spacing: 0.04em;
+  opacity: 0.65;
+}
+
+.mission-brief[hidden] { display: none; }
+
 /* ---------- 레이아웃 ---------- */
 
 .layout {
