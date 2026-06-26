@@ -126,8 +126,7 @@
       finished.length > 0 ? ARIA.fmt(finished[0].finalSec) : "--:--";
 
     const hasAnyData = sessions.length > 0 || finished.length > 0 || dnf.length > 0;
-    layout.classList.toggle("with-active", hasAnyData);
-    document.getElementById("mission-brief").hidden = sessions.length > 0;
+    layout.classList.toggle("with-active", sessions.length > 0);
   }
 
   // ---------- 리더보드 ----------
@@ -168,15 +167,51 @@
       .join("");
   }
 
+  // ---------- 뽑기 현황 ----------
+
+  function renderLottery() {
+    document.getElementById("lottery-prizes").innerHTML = ARIA.getLottery()
+      .map((p) => `
+        <div class="lottery-chip${p.remaining === 0 ? " sold-out" : ""}">
+          <span class="lottery-rank">${p.rank}</span>
+          <div class="lottery-remain">
+            <span class="lottery-num">${p.remaining}</span>
+            <span class="lottery-denom">/ ${p.total}명</span>
+          </div>
+          <button class="btn btn-claim" data-rank="${p.rank}"
+            ${p.remaining === 0 ? "disabled" : ""}>당첨</button>
+        </div>`)
+      .join("");
+  }
+
+  document.getElementById("lottery-prizes").addEventListener("click", (e) => {
+    const btn = e.target.closest(".btn-claim");
+    if (!btn || btn.disabled) return;
+    const rank = btn.dataset.rank;
+    if (confirm(`${rank} 당첨자가 나왔나요?\n잔여 인원을 1명 줄입니다.`)) {
+      ARIA.claimPrize(rank);
+      renderLottery();
+    }
+  });
+
+  document.getElementById("btn-lottery-reset").addEventListener("click", () => {
+    if (confirm("뽑기 현황을 초기 인원으로 되돌리시겠습니까?")) {
+      ARIA.resetLottery();
+      renderLottery();
+    }
+  });
+
   // 다른 탭(admin.html)에서 데이터가 바뀌면 즉시 반영
   window.addEventListener("storage", () => {
     renderSessions();
     renderBoard();
     renderStats();
+    renderLottery();
   });
 
   setInterval(tick, 250);
   renderSessions();
   renderBoard();
   renderStats();
+  renderLottery();
 })();

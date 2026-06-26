@@ -41,8 +41,14 @@
   </div>
 
   <main class="layout" id="layout">
-    <!-- 미션 브리핑 (이벤트 시작 전 빈 상태) -->
-    <section id="mission-brief" class="mission-brief" hidden>
+    <!-- Col 1: 진행 중인 팀 (팀 있을 때만) -->
+    <section class="active-panel" id="active-panel" hidden>
+      <h2 class="panel-title">▸ 진행 중인 팀</h2>
+      <div id="session-cards" class="session-cards"></div>
+    </section>
+
+    <!-- 미션 브리핑 (항상 표시) -->
+    <section id="mission-brief" class="mission-brief">
       <div class="brief-inner">
         <p class="brief-tag">// MISSION BRIEFING</p>
         <h2 class="brief-title">ARIA 연구소 탈출 프로토콜</h2>
@@ -64,14 +70,7 @@
             <span class="brief-rule-val">소요시간 + 힌트 패널티 합산</span>
           </div>
         </div>
-        <p class="brief-cta">▲ 위 팀명 입력란에 팀명을 입력하고 Enter를 누르면 타이머가 즉시 시작됩니다</p>
       </div>
-    </section>
-
-    <!-- 진행 중인 팀 패널 (팀이 있을 때만 표시) -->
-    <section class="active-panel" id="active-panel" hidden>
-      <h2 class="panel-title">▸ 진행 중인 팀</h2>
-      <div id="session-cards" class="session-cards"></div>
     </section>
 
     <!-- 리더보드 -->
@@ -99,6 +98,33 @@
         </table>
       </div>
     </section>
+
+    <!-- Col 3: 탈출 보상 + 뽑기 현황 -->
+    <div class="right-col">
+      <section class="reward-panel">
+        <h2 class="panel-title">▸ 탈출 보상</h2>
+        <ul class="reward-list">
+          <li class="reward-item">
+            <span class="reward-rank rank-gold-txt">1위</span>
+            <span class="reward-val">뽑기 <b>5</b>회</span>
+          </li>
+          <li class="reward-item">
+            <span class="reward-rank rank-silver-txt">2위</span>
+            <span class="reward-val">뽑기 <b>3</b>회</span>
+          </li>
+          <li class="reward-item">
+            <span class="reward-rank rank-bronze-txt">3위</span>
+            <span class="reward-val">뽑기 <b>1</b>회</span>
+          </li>
+        </ul>
+      </section>
+
+      <section id="lottery-panel" class="lottery-panel">
+        <h2 class="panel-title">▸ 뽑기 현황</h2>
+        <div id="lottery-prizes" class="lottery-prizes"></div>
+        <button id="btn-lottery-reset" class="lottery-reset-btn">↺ 초기화</button>
+      </section>
+    </div>
   </main>
 
   <footer class="foot">영산고등학교 MIT 동아리 · 함박데이 — ARIA 연구소 탈출</footer>

@@ -163,12 +163,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 10px;
 }
 
 .brief-inner {
   width: 100%;
-  max-width: 660px;
   background: var(--panel);
   border: 1px solid var(--line);
   border-top: 3px solid var(--cyan);
@@ -197,14 +195,13 @@ body {
   font-size: 0.95rem;
   color: var(--text-dim);
   line-height: 1.7;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
 .brief-rules {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 26px;
   padding: 18px 20px;
   background: rgba(255, 255, 255, 0.035);
   border: 1px solid var(--line);
@@ -229,6 +226,16 @@ body {
   letter-spacing: 0.04em;
 }
 
+/* 팀 진행 중: 브리핑 컴팩트 */
+.layout.with-active .brief-desc  { display: none; }
+.layout.with-active .brief-inner { padding: 14px 18px; }
+.layout.with-active .brief-tag   { font-size: 0.68rem; margin-bottom: 4px; }
+.layout.with-active .brief-title { font-size: 1.05rem; margin-bottom: 10px; }
+.layout.with-active .brief-rules { gap: 6px; padding: 10px 12px; }
+.layout.with-active .brief-rule  { font-size: 0.85rem; gap: 10px; }
+.layout.with-active .brief-rule-icon { width: 18px; font-size: 0.9rem; }
+.layout.with-active .brief-rule-val  { font-size: 0.82rem; }
+
 .brief-cta {
   font-size: 0.82rem;
   color: var(--cyan);
@@ -244,14 +251,24 @@ body {
 .layout {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr;
+  /* 기본: 브리핑(col1) | 리더보드(col2) | 우측(col3) */
+  grid-template-columns: 4fr 6fr minmax(200px, 3fr);
   gap: 20px;
   padding: 20px 22px;
   width: 100%;
   max-width: 1500px;
   margin: 0 auto;
 }
-.layout.with-active { grid-template-columns: minmax(340px, 5fr) 7fr; }
+
+/* 팀 진행 중: active-panel(col1) | 브리핑+리더보드(col2) | 우측(col3) */
+.layout.with-active {
+  grid-template-columns: minmax(280px, 4fr) 6fr minmax(200px, 3fr);
+  grid-template-rows: auto 1fr;
+}
+.layout.with-active #active-panel  { grid-column: 1; grid-row: 1 / 3; }
+.layout.with-active #mission-brief { grid-column: 2; grid-row: 1; }
+.layout.with-active .board-panel   { grid-column: 2; grid-row: 2; }
+.layout.with-active .right-col     { grid-column: 3; grid-row: 1 / 3; }
 
 .panel-title {
   font-size: 0.95rem;
@@ -379,6 +396,133 @@ body {
   text-align: center;
 }
 .board-dnf td { color: var(--text-dim); }
+
+/* ---------- 뽑기 현황 ---------- */
+
+.right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-self: start;
+}
+
+.reward-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+.reward-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.reward-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.reward-rank {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 1rem;
+  min-width: 2em;
+}
+
+.rank-gold-txt   { color: var(--gold); }
+.rank-silver-txt { color: var(--silver); }
+.rank-bronze-txt { color: var(--bronze); }
+
+.reward-val { font-size: 0.95rem; color: var(--text); }
+.reward-val b { font-family: var(--mono); font-size: 1.2rem; color: var(--cyan); }
+
+.lottery-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+}
+
+.lottery-prizes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0;
+  flex: 1;
+}
+
+.lottery-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  transition: opacity 0.3s;
+}
+
+.lottery-chip.sold-out { opacity: 0.4; }
+
+.lottery-rank {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 1.05rem;
+  font-family: var(--mono);
+  min-width: 2.8em;
+}
+
+.lottery-remain {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex: 1;
+}
+
+.lottery-num {
+  font-family: var(--mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--cyan);
+  text-shadow: 0 0 10px rgba(90, 208, 230, 0.4);
+  line-height: 1;
+}
+
+.lottery-denom {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  font-family: var(--mono);
+}
+
+.btn-claim { padding: 6px 12px; font-size: 0.85rem; }
+.btn-claim:disabled { cursor: not-allowed; filter: none; opacity: 0.5; }
+
+.lottery-reset-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  padding: 4px;
+  font-family: var(--sans);
+  text-align: center;
+  align-self: center;
+}
+.lottery-reset-btn:hover { color: var(--text); }
 
 /* ---------- 푸터 ---------- */
 

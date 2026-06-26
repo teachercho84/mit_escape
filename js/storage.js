@@ -7,6 +7,13 @@ const ARIA = (() => {
   const HINT_MAX = 6;
   const TIME_LIMIT_SEC = 15 * 60;
 
+  const LOTTERY_KEY = "aria-lottery";
+  const LOTTERY_DEFAULTS = [
+    { rank: "1등", total: 1, remaining: 1 },
+    { rank: "2등", total: 2, remaining: 2 },
+    { rank: "3등", total: 2, remaining: 2 },
+  ];
+
   function load(key) {
     try {
       const v = JSON.parse(localStorage.getItem(key));
@@ -130,6 +137,25 @@ const ARIA = (() => {
     );
   }
 
+  // ---------- 뽑기 현황 ----------
+
+  function getLottery() {
+    const stored = load(LOTTERY_KEY);
+    return stored.length > 0 ? stored : LOTTERY_DEFAULTS.map((p) => ({ ...p }));
+  }
+
+  function claimPrize(rank) {
+    const prizes = getLottery();
+    const prize = prizes.find((p) => p.rank === rank);
+    if (!prize || prize.remaining <= 0) return;
+    prize.remaining -= 1;
+    save(LOTTERY_KEY, prizes);
+  }
+
+  function resetLottery() {
+    save(LOTTERY_KEY, LOTTERY_DEFAULTS.map((p) => ({ ...p })));
+  }
+
   // ---------- 유틸 ----------
 
   function clampHint(n) {
@@ -168,6 +194,9 @@ const ARIA = (() => {
     addHint,
     endSession,
     isNameTaken,
+    getLottery,
+    claimPrize,
+    resetLottery,
     fmt,
     parseTime,
   };
