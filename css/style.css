@@ -215,8 +215,8 @@ body {
   font-size: 0.95rem;
 }
 
-.brief-rule-icon { width: 22px; text-align: center; }
-.brief-rule span:nth-child(2) { flex: 1; color: var(--text-dim); }
+.brief-rule-icon { width: 22px; text-align: center; flex-shrink: 0; }
+.brief-rule span:nth-child(2) { flex-shrink: 0; color: var(--text-dim); white-space: nowrap; }
 
 .brief-rule-val {
   font-family: var(--mono);
@@ -224,6 +224,12 @@ body {
   font-weight: 700;
   font-size: 0.92rem;
   letter-spacing: 0.04em;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
 }
 
 /* 팀 진행 중: 브리핑 컴팩트 */
